@@ -105,7 +105,13 @@ end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-  C2.Connect(Edit1.Text,5555);
+  if C2.Connected then
+  begin
+    C2.Disconnect;
+    Timer2.Enabled:=False;
+    Circle1.Fill.Color:=claRed;
+  end else
+    C2.Connect(Edit1.Text,5555);
 end;
 
 procedure TForm1.OnC2Connect(Sender: TObject);
