@@ -26,6 +26,7 @@ type
   private
     S,SC,C: TTCPSocket;
     C2: TStreamSocket;
+    procedure OnCConnect(Sender: TObject);
     procedure OnAccept(Sender: TObject);
     procedure OnReceived(Sender: TObject);
     procedure OnC2Connect(Sender: TObject);
@@ -50,6 +51,7 @@ begin
   //S.Start(5556);
 
   C:=TTCPSocket.Create;
+  C.OnConnect:=OnCConnect;
 
   C2:=TStreamSocket.Create;
   C2.OnConnect:=OnC2Connect;
@@ -100,7 +102,14 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 begin
-  C.Connect(S.HostAddress,5556);
+  //C.Connect(S.HostAddress,5555);
+  C.Connect('190.2.146.26',5555);
+end;
+
+procedure TForm1.OnCConnect(Sender: TObject);
+begin
+  C.Disconnect;
+  C.Connect('190.2.146.26',5555);
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
